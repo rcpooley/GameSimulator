@@ -1,0 +1,17 @@
+#router {
+    width: 100%;
+    height: 100%;
+}
+
+.mainContainer {
+    text-align: center;
+
+    button {
+        max-width: 200px;
+        width: 100%;
+    }
+}
+
+.myParagraph {
+    padding-top: 5px;
+}
