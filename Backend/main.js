@@ -1,14 +1,13 @@
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const socketIO = require('socket.io');
 const GameHandler = require('./gameHandler');
 const config = require('./config.json');
 
 const app = express();
 
-app.get('*', (req, res) => {
-    res.send('Hello world');
-});
+app.use(express.static(path.resolve(__dirname, '../Frontend/dist')));
 
 const server = http.createServer(app);
 

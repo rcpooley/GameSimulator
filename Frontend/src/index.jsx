@@ -5,8 +5,8 @@ import socketIO from 'socket.io-client';
 import Router from './router';
 import './index.css';
 
-const socket = socketIO('http://localhost:8080');
-const storage = sessionStorage; //localStorage
+const socket = socketIO('http://bandbus.tk');
+const storage = localStorage;
 
 function genID() {
     const alpha =

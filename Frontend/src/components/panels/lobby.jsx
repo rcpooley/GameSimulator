@@ -66,6 +66,10 @@ class Lobby extends React.Component {
                             <button
                                 className="btn btn-primary"
                                 onClick={() => this.start()}
+                                disabled={
+                                    game.players.length < 5 ||
+                                    game.players.length > 10
+                                }
                             >
                                 Start
                             </button>
