@@ -14,7 +14,7 @@ function remote(Component, func, ...args) {
 
         componentDidMount() {
             this.props
-                .socket(func, ...args)
+                .call(func, ...args)
                 .then(resp => this.setState({ resp, loaded: true }))
                 .catch(error => {
                     console.error(error);

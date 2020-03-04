@@ -13,11 +13,11 @@ class GetName extends React.Component {
     }
 
     onSubmit(e) {
-        const { socket, match, redirect } = this.props;
+        const { call, match, redirect } = this.props;
         const { name } = this.state;
         e.preventDefault();
 
-        const success = socket('joinGame', match.params.gameCode, name);
+        const success = call('joinGame', match.params.gameCode, name);
         if (success) {
             redirect('/game');
         }

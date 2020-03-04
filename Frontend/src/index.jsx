@@ -6,6 +6,7 @@ import Router from './router';
 import './index.css';
 
 const socket = socketIO('http://localhost:8080');
+const storage = sessionStorage; //localStorage
 
 function genID() {
     const alpha =
@@ -19,10 +20,10 @@ function genID() {
 
 let id;
 socket.on('connect', async () => {
-    id = localStorage.getItem('id');
+    id = storage.getItem('id');
     if (!id) {
         id = genID();
-        localStorage.setItem('id', id);
+        storage.setItem('id', id);
     }
     await call('init');
 
@@ -44,7 +45,7 @@ function call(func, ...args) {
 function onConnected() {
     ReactDOM.render(
         <BrowserRouter>
-            <Router socket={call} />
+            <Router socket={socket} call={call} />
         </BrowserRouter>,
         document.getElementById('root')
     );

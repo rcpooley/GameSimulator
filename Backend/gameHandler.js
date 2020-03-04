@@ -5,7 +5,8 @@ const GameClasses = {
 };
 
 class GameHandler {
-    constructor() {
+    constructor(io) {
+        this.io = io;
         this.funcs = {};
         this.games = {};
 
@@ -62,6 +63,16 @@ class GameHandler {
         return id;
     }
 
+    getGame(playerID) {
+        const gameID = Object.keys(this.games).filter(
+            gid => playerID in this.games[gid].players
+        )[0];
+        if (!gameID) {
+            throw new Error('No game found');
+        }
+        return this.games[gameID];
+    }
+
     handleInit({ socket, id }) {
         socket.join(id);
     }
@@ -77,7 +88,7 @@ class GameHandler {
         }
 
         const gameID = this.getNewGameID();
-        this.games[gameID] = new GameClass(gameID, id);
+        this.games[gameID] = new GameClass(this.io, gameID, id);
         return gameID;
     }
 
@@ -90,6 +101,12 @@ class GameHandler {
     }
 
     handleJoinGame({ id }, gameCode, name) {
+        // Remove them from current game
+        try {
+            const oldGame = this.getGame(id);
+            oldGame.removePlayer(id);
+        } catch (e) {}
+
         const game = this.games[gameCode];
         if (!game) {
             throw new Error(`Game not found with code ${gameCode}`);
@@ -99,14 +116,12 @@ class GameHandler {
         return true;
     }
 
-    handleGameInfo({ id }) {
-        const gameID = Object.keys(this.games).filter(
-            gid => id in this.games[gid].players
-        )[0];
-        if (!gameID) {
-            throw new Error('No game found');
-        }
-        return this.games[gameID].info();
+    handleGameRender({ id }) {
+        return this.getGame(id).info(id);
+    }
+
+    handleGameCall({ id }, gameFunc, args) {
+        return this.getGame(id).call({ id }, gameFunc, args);
     }
 }
 

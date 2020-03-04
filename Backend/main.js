@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 const io = socketIO(server);
 
-const game = new GameHandler();
+const game = new GameHandler(io);
 
 io.on('connection', socket => {
     game.onSocket(socket);

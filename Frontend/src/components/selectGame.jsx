@@ -6,7 +6,7 @@ import P from './paragraph';
 
 class SelectGame extends React.Component {
     async select(gameID) {
-        const code = await this.props.socket('createGame', gameID);
+        const code = await this.props.call('createGame', gameID);
         this.props.redirect(`/getname/${code}`);
     }
 

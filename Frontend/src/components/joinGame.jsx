@@ -14,10 +14,10 @@ class JoinGame extends React.Component {
 
     async onSubmit(e) {
         const { code } = this.state;
-        const { socket, redirect } = this.props;
+        const { call, redirect } = this.props;
         e.preventDefault();
 
-        const valid = await socket('findGame', code);
+        const valid = await call('findGame', code);
         if (valid) {
             redirect(`/getname/${code}`);
         }

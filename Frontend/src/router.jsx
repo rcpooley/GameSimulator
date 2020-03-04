@@ -22,7 +22,7 @@ class Router extends React.Component {
     }
 
     render() {
-        const { socket } = this.props;
+        const { socket, call } = this.props;
         const { routes } = this.state;
         return (
             <div id="router">
@@ -39,6 +39,7 @@ class Router extends React.Component {
                                         <C
                                             {...props}
                                             socket={socket}
+                                            call={call}
                                             redirect={path =>
                                                 props.history.push(path)
                                             }
