@@ -8,6 +8,9 @@ const config = require('./config.json');
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, '../Frontend/dist')));
+app.use((req, res) =>
+    res.sendFile(path.resolve(__dirname, '../Frontend/dist/index.html'))
+);
 
 const server = http.createServer(app);
 
